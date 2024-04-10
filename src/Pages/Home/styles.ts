@@ -3,26 +3,26 @@ import { mixins } from '../../styles/mixins'
 
 export const Hero = styled.section`
   position: relative;
-  padding: 10rem 5.8rem;
+  padding: 5.8rem 0;
+  max-height: 544px;
 
   img#heroBg {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    max-width: 100vw;
-    max-height: 544px;
+    width: 100vw;
     object-fit: cover;
   }
 `
 
 export const HeroContent = styled.div`
+  width: 100%;
   max-width: 1220px;
   margin: 0 auto;
 
   display: flex;
-  justify-content: center;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 56px;
 
   > div {
@@ -64,5 +64,26 @@ export const Infos = styled.div`
   svg {
     padding: 8px;
     border-radius: 50%;
+  }
+`
+
+export const CoffeeList = styled.section`
+  max-width: 1220px;
+  padding: 32px 20px 150px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 54px;
+
+  > h2 {
+    ${mixins.fonts.titleL}
+  }
+
+  > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-row-gap: 40px;
+    grid-column-gap: 32px;
   }
 `

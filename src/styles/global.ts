@@ -21,5 +21,6 @@ export const GlobalStyled = createGlobalStyle`
     button {
       border: none;
       cursor: pointer;
+      line-height: 0;
     }
 `
