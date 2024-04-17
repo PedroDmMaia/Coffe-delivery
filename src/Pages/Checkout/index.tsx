@@ -1,19 +1,37 @@
-import { MapPinLine } from 'phosphor-react'
+import {
+  MapPinLine,
+  CreditCard,
+  Bank,
+  Money,
+  CurrencyDollar,
+  Trash
+} from 'phosphor-react'
+
 import {
   Container,
   Content,
   FormAdress,
   PaymentMethod,
-  ContentCoffe,
   CoffeCheckout,
   FormHeader,
-  FormInputs
+  FormInputs,
+  PaymentMethodHeader,
+  CoffeList,
+  CheckoutInputs,
+  CardCoffe,
+  OrderTotal,
+  OrderButton
 } from './styles'
+
 import { TextInput } from '../../components/Form/TextInput'
+import { Radio } from '../../components/Form/SelectRadio'
+import { QuantityInput } from '../../components/Form/QuantityIput'
+
+import { coffees } from '../../../data.json'
 
 export function Checkout() {
   return (
-    <Container>
+    <Container onSubmit={(e) => e.preventDefault()}>
       <Content>
         <h2>Complete seu pedido</h2>
 
@@ -30,68 +48,128 @@ export function Checkout() {
             <TextInput
               placeholder="Cep"
               type="number"
-              style={{ gridArea: 'cep' }}
+              containerProps={{ style: { gridArea: 'cep' } }}
             />
 
-            <TextInput placeholder="Rua" style={{ gridArea: 'street' }} />
+            <TextInput
+              placeholder="Rua"
+              containerProps={{ style: { gridArea: 'street' } }}
+            />
 
             <TextInput
               placeholder="Número"
               type="number"
-              style={{ gridArea: 'number' }}
+              containerProps={{ style: { gridArea: 'number' } }}
             />
 
             <TextInput
               placeholder="Complemento"
-              style={{ gridArea: 'fullAdress' }}
+              containerProps={{ style: { gridArea: 'fullAdress' } }}
               optional
             />
 
             <TextInput
               placeholder="Bairro"
-              style={{ gridArea: 'neighborhood' }}
+              containerProps={{ style: { gridArea: 'neighborhood' } }}
             />
 
-            <TextInput placeholder="Cidade" style={{ gridArea: 'city' }} />
+            <TextInput
+              placeholder="Cidade"
+              containerProps={{ style: { gridArea: 'city' } }}
+            />
 
-            <TextInput placeholder="UF" style={{ gridArea: 'state' }} />
+            <TextInput
+              placeholder="UF"
+              containerProps={{ style: { gridArea: 'state' } }}
+            />
           </FormInputs>
         </FormAdress>
 
-        <PaymentMethod></PaymentMethod>
+        <PaymentMethod>
+          <PaymentMethodHeader>
+            <CurrencyDollar size={16} />
+
+            <div>
+              <h4>Pagamento</h4>
+              <span>
+                O pagamento é feito na entrega. Escolha a forma que deseja pagar
+              </span>
+            </div>
+          </PaymentMethodHeader>
+
+          <div>
+            <Radio isSelected={false} value="credit">
+              <CreditCard size={16} />
+              <span>Cartão de crédito</span>
+            </Radio>
+
+            <Radio isSelected={false} value="debit">
+              <Bank size={16} />
+              <span>Cartão de débito</span>
+            </Radio>
+
+            <Radio isSelected={false} value="cash">
+              <Money size={16} />
+              <span>Dinheiro</span>
+            </Radio>
+          </div>
+        </PaymentMethod>
       </Content>
-      <ContentCoffe>
+      <Content>
         <h2>Cafés selecionados</h2>
 
         <CoffeCheckout>
-          <div>
+          <CoffeList>
+            {coffees
+              .filter((coffee) => coffee.title === 'Expresso Americano')
+              .map((coffee) => (
+                <div key={coffee.id}>
+                  <CardCoffe>
+                    <img src={coffee.image} alt="" />
+
+                    <div>
+                      <span>{coffee.title}</span>
+                      <div>
+                        <CheckoutInputs>
+                          <QuantityInput
+                            quantity={1}
+                            incrementState={() => console.log('incrementa')}
+                            decrementState={() => console.log('decrement')}
+                          />
+
+                          <button type="button">
+                            <Trash size={16} />
+
+                            <span>remover</span>
+                          </button>
+                        </CheckoutInputs>
+                      </div>
+                    </div>
+                  </CardCoffe>
+                  <aside>R$ {coffee.price}0</aside>
+                </div>
+              ))}
+          </CoffeList>
+          <OrderTotal>
             <div>
               <p>Total de items</p>
-              <div>
-                <span>R$</span>
-                <span></span>
-              </div>
+              <span>R$ 29,70</span>
             </div>
 
             <div>
               <p>Entrega</p>
-              <div>
-                <span>R$</span>
-                <span></span>
-              </div>
+              <span>R$ 3,50</span>
             </div>
 
             <div>
               <p>Total</p>
-              <div>
-                <span>R$</span>
-                <span></span>
-              </div>
+
+              <span>R$ 33,20</span>
             </div>
-          </div>
-          <button type="submit">Confirmar pedido</button>
+          </OrderTotal>
+          <OrderButton type="submit">Confirmar pedido</OrderButton>
         </CoffeCheckout>
-      </ContentCoffe>
+      </Content>
     </Container>
   )
 }
