@@ -48,7 +48,7 @@ export function CartReducer(state: cartState, action: Actions) {
         )
 
         if (itemToIncrement?.id) {
-          itemToIncrement.quantity + 1
+          itemToIncrement.quantity += 1
         }
       })
 
@@ -59,7 +59,7 @@ export function CartReducer(state: cartState, action: Actions) {
         )
 
         if (itemToDecrement?.id && itemToDecrement.quantity > 1) {
-          itemToDecrement.quantity - 1
+          itemToDecrement.quantity -= 1
         }
       })
 
