@@ -1,18 +1,19 @@
 import { ThemeProvider } from 'styled-components'
-import { BrowserRouter } from 'react-router-dom'
-
-import { Router } from './Router'
-
 import { GlobalStyled } from './styles/global'
 import { defaulTheme } from './styles/theme/default'
+import { CartContextProvider } from './context/CartProvider'
+import { Header } from './components/Header'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
     <ThemeProvider theme={defaulTheme}>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
       <GlobalStyled />
+
+      <CartContextProvider>
+        <Header />
+        <Outlet />
+      </CartContextProvider>
     </ThemeProvider>
   )
 }

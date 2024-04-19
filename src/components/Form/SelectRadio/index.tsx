@@ -7,13 +7,15 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
 }
 
 export const Radio = forwardRef(function Radio(
-  { isSelected, children, ...rest }: Props,
+  { id, isSelected, children, ...rest }: Props,
   ref: LegacyRef<HTMLInputElement>
 ) {
   return (
     <Container data-state={isSelected}>
-      <input type="radio" ref={ref} {...rest} />
-      {children}
+      <div>
+        <input id={id} type="radio" ref={ref} {...rest} />
+        <label htmlFor={id}>{children}</label>
+      </div>
     </Container>
   )
 })

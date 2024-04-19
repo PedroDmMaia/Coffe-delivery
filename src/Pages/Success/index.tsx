@@ -6,9 +6,23 @@ import {
 import delivery from '../../assets/delivery.png'
 import { MapPin, Timer, CurrencyDollar } from 'phosphor-react'
 import { useTheme } from 'styled-components'
+import { useCart } from '../../hooks/useCart'
+import { useParams } from 'react-router-dom'
 
 export function Success() {
   const theme = useTheme()
+  const { orders } = useCart()
+  const { orderId } = useParams()
+  const orderInfo = orders.find((order) => order.id === Number(orderId))
+  const paymentMethod = {
+    credit: 'Cartão de crédito',
+    debit: 'Cartão de débito',
+    cash: 'Dinheiro'
+  }
+
+  if (!orderInfo?.id) {
+    return null
+  }
 
   return (
     <Container>
@@ -27,10 +41,15 @@ export function Success() {
               />
               <div>
                 <span>
-                  Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                  Entrega em{' '}
+                  <strong>
+                    {orderInfo.street}, {orderInfo.number}
+                  </strong>
                 </span>
 
-                <span>Farrapos - Porto Alegre, RS</span>
+                <span>
+                  {orderInfo.neighborhood} - {orderInfo.city}, {orderInfo.state}
+                </span>
               </div>
             </div>
 
@@ -56,7 +75,7 @@ export function Success() {
               />
               <div>
                 <span>Pagamento na entrega</span>
-                <strong>Cartão de Crédito</strong>
+                <strong>{paymentMethod[orderInfo.paymentMethod]}</strong>
               </div>
             </div>
           </DeliveryInformationContent>

@@ -3,8 +3,12 @@ import { MapPin, ShoppingCart } from 'phosphor-react'
 
 import { Container } from './styles.ts'
 import { Link } from 'react-router-dom'
+import { useCart } from '../../hooks/useCart.tsx'
 
 export function Header() {
+  const { cart } = useCart()
+  console.log(cart)
+
   return (
     <Container>
       <Link to="/">
@@ -15,9 +19,9 @@ export function Header() {
           <MapPin size={24} color="#8047f8" weight="fill" />
           <p>Porto Alegre, RS</p>
         </div>
-        <Link to="/checkout">
+        <Link to={`checkout`}>
           <ShoppingCart size={24} color="#c47f17" weight="fill" />
-          <span>3</span>
+          {cart.length > 0 ? <span>{cart.length}</span> : null}
         </Link>
       </div>
     </Container>

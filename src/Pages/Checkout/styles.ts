@@ -243,3 +243,9 @@ export const OrderButton = styled.button`
     background: ${({ theme }) => theme['yellow-700']};
   }
 `
+
+export const ErrorMessageRadio = styled.p`
+  ${mixins.fonts.textXS};
+  font-weight: 400;
+  color: red;
+`

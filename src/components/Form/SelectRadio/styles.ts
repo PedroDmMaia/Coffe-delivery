@@ -23,8 +23,8 @@ export const Container = styled.div`
   }
 
   &[data-state='true'] {
-    border-color: ${({ theme }) => theme['purple-light']};
-    color: ${({ theme }) => theme['purple-400']};
+    background-color: ${({ theme }) => theme['purple-light']};
+    border-color: ${({ theme }) => theme['purple-400']};
   }
 
   input {
@@ -33,5 +33,13 @@ export const Container = styled.div`
 
   svg {
     color: ${({ theme }) => theme['purple-400']};
+  }
+
+  div {
+    label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
   }
 `

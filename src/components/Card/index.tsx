@@ -1,6 +1,8 @@
-import { useState } from 'react'
-import { ShoppingCart } from 'phosphor-react'
+import { useEffect, useState } from 'react'
+import { ShoppingCart, Check } from 'phosphor-react'
 import { QuantityInput } from '../Form/QuantityIput'
+import { useCart } from '../../hooks/useCart'
+
 import {
   Container,
   CoffeImg,
@@ -11,9 +13,12 @@ import {
   CoffePrice,
   CoffeOrder
 } from './styles'
+import { priceFormatter } from '../../utils/formatter'
+import { useTheme } from 'styled-components'
 
 type Props = {
   coffee: {
+    id: string
     title: string
     description: string
     tags: string[]
@@ -24,14 +29,40 @@ type Props = {
 
 export function Card({ coffee }: Props) {
   const [quantity, setQuantity] = useState(1)
+  const [isItemAdded, setIsItemAdded] = useState(false)
+
+  const theme = useTheme()
+  const { addItem } = useCart()
 
   function incrementState() {
     setQuantity((state) => state + 1)
   }
 
   function decrementState() {
-    setQuantity((state) => state - 1)
+    if (quantity > 1) {
+      setQuantity((state) => state - 1)
+    }
   }
+
+  function handleAddItem() {
+    addItem({ id: coffee.id, quantity })
+    setIsItemAdded(true)
+    setQuantity(1)
+  }
+
+  useEffect(() => {
+    let timeout: number
+
+    if (isItemAdded) {
+      timeout = setTimeout(() => setIsItemAdded(false), 1000)
+    }
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    }
+  }, [isItemAdded])
 
   return (
     <Container>
@@ -47,8 +78,7 @@ export function Card({ coffee }: Props) {
 
       <Control>
         <CoffePrice>
-          <span>R$</span>
-          <span>{coffee.price}</span>
+          <span>{priceFormatter.format(coffee.price)}</span>
         </CoffePrice>
 
         <CoffeOrder>
@@ -57,8 +87,16 @@ export function Card({ coffee }: Props) {
             incrementState={incrementState}
             decrementState={decrementState}
           />
-          <button>
-            <ShoppingCart weight="fill" />
+          <button disabled={isItemAdded} onClick={handleAddItem}>
+            {isItemAdded ? (
+              <Check weight="fill" size={22} color={theme['base-card']} />
+            ) : (
+              <ShoppingCart
+                size={22}
+                weight="fill"
+                color={theme['base-card']}
+              />
+            )}
           </button>
         </CoffeOrder>
       </Control>
