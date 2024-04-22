@@ -11,7 +11,7 @@ import {
 import { TextInput } from '../../components/Form/TextInput'
 import { Radio } from '../../components/Form/SelectRadio'
 import { QuantityInput } from '../../components/Form/QuantityIput'
-import { coffees } from '../../../data.json'
+import { Coffees } from '../../../data.json'
 import { priceFormatter } from '../../utils/formatter'
 import { useCart } from '../../hooks/useCart'
 
@@ -72,7 +72,7 @@ export function Checkout() {
   } = useCart()
 
   const coffeesInCart = cart.map((item) => {
-    const coffeeInfo = coffees.find((coffee) => coffee.id === item.id)
+    const coffeeInfo = Coffees.find((coffee) => coffee.id === item.id)
 
     if (!coffeeInfo) {
       throw new Error('invalid coffee')

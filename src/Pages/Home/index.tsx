@@ -7,7 +7,7 @@ import { Hero, HeroContent, Infos, Heading, CoffeeList } from './styles'
 import { useTheme } from 'styled-components'
 import { Card } from '../../components/Card'
 
-import { coffees } from '../../../data.json'
+import { Coffees } from '../../../data.json'
 
 export function Home() {
   const theme = useTheme()
@@ -78,7 +78,7 @@ export function Home() {
         <h2>Nossos cafés</h2>
 
         <div>
-          {coffees.map((coffee) => (
+          {Coffees.map((coffee) => (
             <Card key={coffee.id} coffee={coffee} />
           ))}
         </div>
